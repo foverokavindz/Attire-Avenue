@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken');
 const config = require('config');
+// route handlers walin authorize person kenekda blnwa me changes krnne
+// ekt me funtion eka handles wlin access krnawa
 
-module.exports = function (req, res, next) {
+const protect = function (req, res, next) {
   // first check is there a token
   const token = req.header('x-auth-token');
   if (!token) return res.status(401).send('Access denied. No token provided');
@@ -16,5 +18,9 @@ module.exports = function (req, res, next) {
   }
 };
 
-// route handlers walin authorize person kenekda blnwa me changes krnne
-// ekt me funtion eka handles wlin access krnawa
+const admin = function (req, res, next) {
+  if (req.user.role !== 'admin') return res.status(403).send('Access Denied');
+  next();
+};
+
+export { protect, admin };
