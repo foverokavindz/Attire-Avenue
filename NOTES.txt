@@ -1,0 +1,13 @@
+How create DB  - Done
+
+Product ekak add weddi category doc ekth update wenna one
+
+Images implement kre na
+
+JWT use krnne kohomda
+
+DB eke docs Cloths shop ekakt galapenna hdnna one thawa
+
+Data validation hdnna one
+
+frontend eken ewna tot ekai backend tot ekai match krana validation ekk one
