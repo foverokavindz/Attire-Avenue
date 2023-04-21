@@ -102,7 +102,6 @@ router.put('/changeqty/:itemId/:userId', async (req, res) => {
 });
 
 // clear cart (after order success) or (User req)
-
 router.delete('/remove/:userId', async (req, res) => {
   try {
     const cart = await Cart.findById(req.params.userId);
@@ -119,15 +118,3 @@ router.delete('/remove/:userId', async (req, res) => {
 });
 
 module.exports = router;
-
-// {
-//   "name": "Product 1",
-//   "description": "This is the first product",
-//   "category": [
-//                   {"id " : "----"},
-//                   {"id ": "----"},"
-//                   {"id ": "----"},"
-//   ],
-//   "price": 19.99,
-//   "quantity": 10
-// }
