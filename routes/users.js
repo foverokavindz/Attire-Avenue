@@ -14,11 +14,11 @@ router.get('/', async (req, res) => {
   res.send(users);
 });
 
-// show users by id
-// router.get('/me', auth, async (req, res) => {
-//   const user = await User.findById(req.user._id).select('-password');
-//   res.send(user);
-// });
+// show users by id // Show User profile
+router.get('/me', async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  res.send(user);
+});
 
 // Register a User
 router.post('/register', async (req, res) => {
@@ -111,19 +111,19 @@ router.get('/logout', (req, res) => {
   });
 });
 
-// update User
+// update User - By user acc
 router.post('/update/:id', async (req, res) => {
   const user = await User.findById(req.params.id);
 
-  const { firstName, lastName, email, phone, address, role } = req.body;
+  const { firstName, lastName, email, phone, address } = req.body;
 
   if (user) {
-    user.firstName = firstName || user.firstName;
-    user.lastName = lastName || user.lastName;
-    user.email = email || user.email;
-    user.phone = phone;
-    user.address = address;
-    user.role = role;
+    user.firstName = firstName || user.firstName.trim();
+    user.lastName = lastName || user.lastName.trim();
+    user.email = email || user.email.trim();
+    user.phone = phone || user.phone.trim();
+    user.address = address || user.address.trim();
+    // user.role = role; - not allowed to change roll. Admin only
 
     const updatedUser = await user.save();
 
@@ -131,6 +131,20 @@ router.post('/update/:id', async (req, res) => {
   } else {
     res.status(404);
     throw new Error('User not found');
+  }
+});
+
+// delete user
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedUser = await User.findByIdAndRemove(req.params.id);
+    if (!deletedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    return res.status(204).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 });
 
