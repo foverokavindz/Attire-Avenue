@@ -39,4 +39,22 @@ router.get('/:categoryName', async (req, res) => {
   }
 });
 
+// get products by name
+router.get('/:name', async (req, res) => {
+  try {
+    const category = await Category.findOne({ name: req.params.name }).populate(
+      'product'
+    );
+
+    if (!category) {
+      return res.status(404).send('Category not found');
+    }
+
+    res.send(category.product);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server error');
+  }
+});
+
 module.exports = router;

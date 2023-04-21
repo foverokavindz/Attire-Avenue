@@ -57,12 +57,17 @@ router.post('/addnew', async (req, res) => {
   // Save the product to the database
   await product.save();
 
-  // Update categories that the product belongs to
-  for (const categoryId of category) {
-    const cat = await Category.findById(categoryId);
-    cat.product.push(product._id);
-    await cat.save();
-  }
+  // Update the category with the new product ID
+  // use await before Promise.all() to make sure that all updates are completed before sending the response.
+  await Promise.all(
+    category.map(async (categoryObj) => {
+      const categoryId = categoryObj._id;
+      await Category.updateOne(
+        { _id: categoryId },
+        { $push: { product: product._id } }
+      );
+    })
+  );
 
   // Return the product as response
   res.send(product);
@@ -130,5 +135,19 @@ router.post('/update/:id', async (req, res) => {
 
 // get product by name // TODO
 
-// get all products by category name //TODO
+router.get('/search/:name', async (req, res) => {
+  const name = req.params.name;
+  const products = await Product.find({
+    name: { $regex: name, $options: 'i' },
+  }).populate('category');
+
+  if (!products.length) {
+    return res.status(404).send(`No products found for ${name}`);
+  }
+
+  res.send(products);
+});
+
+// get all products by category name //TODO  - DONE
+
 module.exports = router;
