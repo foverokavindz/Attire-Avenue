@@ -50,9 +50,44 @@ router.post('/addnew/:id', async (req, res) => {
   res.send(cart);
 });
 // remove Item
+router.post('/removeitem/:itemId/:userId', async (req, res) => {
+  const cart = await Cart.findOne({ user: req.params.userId });
+
+  if (cart) {
+    for (let productObject = 0; productObject < cart.product.length; i++) {
+      const product = cart.product[productObject];
+
+      // Check if this is the object you want to remove
+      if (product.productId.toString() === req.params.itemId.toString()) {
+        // Use splice to remove the object from the array
+        cart.product.splice(productObject, 1);
+        break;
+      }
+    }
+
+    cart.updateAllTotal();
+    await cart.save();
+    res.send(cart);
+  } else {
+    res.status(404);
+    throw new Error('Cart not found');
+  }
+});
 
 // Change Quantity
 
 // clear cart (after order success) or (User req)
 
 module.exports = router;
+
+// {
+//   "name": "Product 1",
+//   "description": "This is the first product",
+//   "category": [
+//                   {"id " : "----"},
+//                   {"id ": "----"},"
+//                   {"id ": "----"},"
+//   ],
+//   "price": 19.99,
+//   "quantity": 10
+// }

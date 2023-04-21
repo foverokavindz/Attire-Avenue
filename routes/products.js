@@ -131,7 +131,7 @@ router.post('/update/:id', async (req, res) => {
   }
 });
 
-// Update Category // TODO
+// Update Category // TODO - Not needed for now
 
 // get product by name // TODO
 
