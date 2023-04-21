@@ -49,8 +49,9 @@ router.post('/addnew/:id', async (req, res) => {
 
   res.send(cart);
 });
+
 // remove Item
-router.post('/removeitem/:itemId/:userId', async (req, res) => {
+router.delete('/removeitem/:itemId/:userId', async (req, res) => {
   const cart = await Cart.findOne({ user: req.params.userId });
 
   if (cart) {
@@ -75,8 +76,47 @@ router.post('/removeitem/:itemId/:userId', async (req, res) => {
 });
 
 // Change Quantity
+router.put('/changeqty/:itemId/:userId', async (req, res) => {
+  const cart = await Cart.findOne({ user: req.params.userId });
+
+  if (cart) {
+    for (let productObject = 0; productObject < cart.product.length; i++) {
+      const product = cart.product[productObject];
+
+      // Check if this is the object you want to remove
+      if (product.productId.toString() === req.params.itemId.toString()) {
+        product.quantity = req.body.quantity;
+        cart.updateItemTotal();
+
+        break;
+      }
+    }
+
+    cart.updateAllTotal();
+    await cart.save();
+    res.send(cart);
+  } else {
+    res.status(404);
+    throw new Error('Cart not found');
+  }
+});
 
 // clear cart (after order success) or (User req)
+
+router.delete('/remove/:userId', async (req, res) => {
+  try {
+    const cart = await Cart.findById(req.params.userId);
+    if (!cart) {
+      res.status(404).json({ message: 'Cart not found' });
+    } else {
+      await cart.remove();
+      res.status(200).json({ message: 'Cart removed' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
 
 module.exports = router;
 
