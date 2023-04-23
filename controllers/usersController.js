@@ -1,5 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const { User, validate } = require('../models/user');
+const _ = require('lodash');
+const bcrypt = require('bcrypt');
 
 // Login the user
 const login = asyncHandler(async (req, res) => {
@@ -70,7 +72,10 @@ const userDelete = asyncHandler(async (req, res) => {
 });
 
 // Get user Profile
-const userProfile = asyncHandler(async (req, res) => {});
+const userProfileGet = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  res.send(user);
+});
 
 // Add new User
 const userRegister = asyncHandler(async (req, res) => {
@@ -120,6 +125,17 @@ const allUsers = asyncHandler(async (req, res) => {
   res.send(users);
 });
 
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password');
+
+  if (user) {
+    res.json(user);
+  } else {
+    res.status(404);
+    throw new Error('User not found');
+  }
+});
+
 // Chnage user system role - Customer - Admin - Operator
 //NOTE
 const userRoleUpdate = asyncHandler(async (req, res) => {});
@@ -130,8 +146,9 @@ export {
   logout,
   userUpdateProfile,
   userDelete,
-  userProfile,
+  userProfileGet,
   userRegister,
   allUsers,
+  getUserById,
   userRoleUpdate,
 };

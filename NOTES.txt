@@ -1,19 +1,30 @@
-# Questions
-How create DB  - Done
 
-Product ekak add weddi category doc ekth update wenna one
+//NOTE :  Questions
 
-Images implement kre na
+    //TODO : How create DB  - Done
 
-JWT use krnne kohomda
+    //TODO : Product ekak add weddi category doc ekth update wenna one
 
-DB eke docs Cloths shop ekakt galapenna hdnna one thawa
+    //TODO : Images implement kre na
 
-Data validation hdnna one
+    //TODO : JWT use krnne kohomda
 
-frontend eken ewna tot ekai backend tot ekai match krana validation ekk one
+    //TODO : DB eke docs Cloths shop ekakt galapenna hdnna one thawa
+
+    //TODO : Data validation hdnna one
+
+    //TODO : frontend eken ewna tot ekai backend tot ekai match krana validation ekk one
+
+    //TODO : controllers add krt psse req.params tikai Id illana ewai poddk blnna one
+
+    //TODO : controllers add krt psse req.params tikai Id illana ewai poddk blnna one
+
+    //TODO : tocken eke timeout eka hdnna one
+
+    //TODO : cart eka hdnn log wenna onema na - feature
 
 
 
-# next update
-    - Wishlist
+//NOTE : Updates
+    next update
+         - Wishlist

@@ -1,3 +1,26 @@
+const express = require('express');
+const router = express.Router();
+const { protect, admin } = require('../middleware/authentication.js');
+const {
+  getAllCategories,
+  addnewCategory,
+  filterByCategory,
+  getProductByName,
+} = require('../controllers/categoriesController.js');
+
+router
+  .route('/')
+  .post(protect, admin, addnewCategory)
+  .get(protect, admin, getAllCategories);
+router.get('/:name', getProductByName);
+router.get('/:categoryName', filterByCategory);
+
+module.exports = router;
+
+// old code
+
+/**
+
 const { Category, validate } = require('../models/category');
 const { Product } = require('../models/product');
 const mongoose = require('mongoose');
@@ -58,3 +81,7 @@ router.get('/:name', async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+ */

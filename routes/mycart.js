@@ -1,3 +1,42 @@
+const express = require('express');
+const router = express.Router();
+const { protect, admin } = require('../middleware/authentication.js');
+const {
+  showCart,
+  createCart,
+  addproduct,
+  removeProduct,
+  changeQty,
+  clearCart,
+} = require('../controllers/cartController.js');
+
+router
+  .route('/')
+  .get(protect, showCart)
+  .post(
+    protect,
+    createCart /*NOTE : Meka auto hadenna one User item add krnw withri */
+  );
+router.route('/addnew/:id').post(protect, addproduct);
+router.get('/search/:name', getProductByName);
+router
+  .route('/:id')
+  .get(getProductById)
+  .delete(protect, admin, deleteProduct)
+  .put(protect, admin, updateProduct);
+
+router.route('/removeitem/:itemId/:userId').delete(protect, removeProduct);
+router.route('/removeitem/:itemId/:userId').put(protect, changeQty);
+router.route('/remove/:userId').delete(protect, clearCart);
+
+module.exports = router;
+
+//old code
+
+/*
+
+
+
 const Cart = require('../models/cart');
 const mongoose = require('mongoose');
 const express = require('express');
@@ -118,3 +157,7 @@ router.delete('/remove/:userId', async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+*/

@@ -1,8 +1,29 @@
-const { Product, validate } = require('../models/product');
-const { Category } = require('../models/category');
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const { protect, admin } = require('../middleware/authentication.js');
+const {
+  displayAllproducts,
+  getProductById,
+  deleteProduct,
+  addNewProduct,
+  addReview,
+  updateProduct,
+  getProductByName,
+} = require('../controllers/productController.js');
+
+router.route('/').get(displayAllproducts).post(protect, admin, addNewProduct);
+router.route('/:id/reviews').post(protect, addReview);
+router.get('/search/:name', getProductByName);
+router
+  .route('/:id')
+  .get(getProductById)
+  .delete(protect, admin, deleteProduct)
+  .put(protect, admin, updateProduct);
+
+module.exports = router;
+
+// old code
+/*
 
 // display all products
 router.get('/', async (req, res) => {
@@ -151,3 +172,7 @@ router.get('/search/:name', async (req, res) => {
 // get all products by category name //TODO  - DONE
 
 module.exports = router;
+
+
+
+*/
