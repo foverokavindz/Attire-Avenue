@@ -27,7 +27,7 @@ const cartSchema = new mongoose.Schema({
 });
 
 // item-wise total
-orderSchema.methods.updateItemTotal = function () {
+cartSchema.methods.updateItemTotal = function () {
   let total = 0;
   this.product.forEach((item) => {
     item.total = parseFloat(item.quantity) * parseFloat(item.price);

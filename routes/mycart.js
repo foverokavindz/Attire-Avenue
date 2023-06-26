@@ -18,12 +18,6 @@ router
     createCart /*NOTE : Meka auto hadenna one User item add krnw withri */
   );
 router.route('/addnew/:id').post(protect, addproduct);
-router.get('/search/:name', getProductByName);
-router
-  .route('/:id')
-  .get(getProductById)
-  .delete(protect, admin, deleteProduct)
-  .put(protect, admin, updateProduct);
 
 router.route('/removeitem/:itemId/:userId').delete(protect, removeProduct);
 router.route('/removeitem/:itemId/:userId').put(protect, changeQty);

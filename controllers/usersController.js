@@ -141,7 +141,7 @@ const getUserById = asyncHandler(async (req, res) => {
 const userRoleUpdate = asyncHandler(async (req, res) => {});
 
 // export all Controllers
-export {
+module.exports = {
   login,
   logout,
   userUpdateProfile,

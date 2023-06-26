@@ -41,4 +41,9 @@ const getProductByName = asyncHandler(async (req, res) => {
   res.send(category.product);
 });
 
-export { getAllCategories, addnewCategory, filterByCategory, getProductByName };
+module.exports = {
+  getAllCategories,
+  addnewCategory,
+  filterByCategory,
+  getProductByName,
+};

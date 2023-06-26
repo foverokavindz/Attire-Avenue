@@ -105,7 +105,7 @@ const clearCart = asyncHandler(async (req, res) => {
   }
 });
 
-export {
+module.exports = {
   showCart,
   createCart,
   addproduct,

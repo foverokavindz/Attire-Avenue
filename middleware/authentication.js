@@ -23,4 +23,4 @@ const admin = function (req, res, next) {
   next();
 };
 
-export { protect, admin };
+module.exports = { protect, admin };

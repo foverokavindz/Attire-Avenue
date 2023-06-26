@@ -82,7 +82,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
   }
 });
 
-export {
+module.exports = {
   addOrderPoducts,
   getOrderById,
   getMyOrders,

@@ -138,8 +138,7 @@ const getProductByName = asyncHandler(async (req, res) => {
 
 // Update Category // TODO - Not needed for now
 // get all products by category name //TODO  - DONE
-
-export {
+module.exports = {
   displayAllproducts,
   getProductById,
   deleteProduct,
